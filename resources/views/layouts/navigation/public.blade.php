@@ -1,6 +1,8 @@
 <nav>
     <ul>
-        <li>Register</li>
+        <li>
+            <a href="{{ route('register') }}">Register</a>
+        </li>
         <li>Login</li>
         <li>Logout</li>
     </ul>
