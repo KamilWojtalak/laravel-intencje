@@ -14,6 +14,10 @@ class Role extends Model
     const ROLE_PARISH = 'parish';
     const ROLE_USER = 'user';
 
+    const ROLE_ADMIN_STRENGTH = 100;
+    const ROLE_PARISH_STRENGTH = 10;
+    const ROLE_USER_STRENGTH = 1;
+
     protected $guarded = [];
 
     public function users(): BelongsToMany
