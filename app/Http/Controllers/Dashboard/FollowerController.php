@@ -9,7 +9,11 @@ class FollowerController extends Controller
 {
     public function index()
     {
-        return view('dashboard.follower.index');
+        $priest = auth()->user()->prists->first();
+
+        return view('dashboard.follower.index', [
+            'priest' => $priest
+        ]);
     }
 
     public function create()
