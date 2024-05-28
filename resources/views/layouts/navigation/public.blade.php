@@ -15,6 +15,12 @@
             <li>
                 <a href="{{ route('logout') }}">Logout</a>
             </li>
+            <li>
+                <a href="{{ route('dashboard') }}">Dashboard</a>
+            </li>
         @endauth
+        <li>
+            <a href="{{ route('test.users.index') }}">TEST USERS</a>
+        </li>
     </ul>
 </nav>
