@@ -77,4 +77,20 @@ class User extends Authenticatable
     {
         return $this->roles->first()->name;
     }
+
+    public function getDashboardRouteName(): string
+    {
+        $roleName = $this->getRoleName();
+
+        if ($roleName === Role::ROLE_PARISH)
+        {
+            $dashboardRouteName = 'dashboard.priest.index';
+        }
+        else
+        {
+            $dashboardRouteName = 'dashboard.follower.index';
+        }
+
+        return $dashboardRouteName;
+    }
 }
