@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 class RegisteredUserController extends Controller
 {
@@ -30,38 +32,66 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $this->handleLogic($request, Role::ROLE_USER);
+
+        $this->validateUserRequest($request, Role::ROLE_USER);
+
+        $user = $this->createUser($request);
+
+        $this->handleUserRole($request, $user, Role::ROLE_USER);
+
+        $this->handleUserPriest($request, $user);
+
+        event(new Registered($user));
+
+        Auth::login($user);
 
         return redirect(route('dashboard', absolute: false));
     }
 
     public function storePriest(Request $request): RedirectResponse
     {
-        $this->handleLogic($request, Role::ROLE_PARISH);
-
-        return redirect(route('dashboard', absolute: false));
-    }
-
-    private function handleLogic(Request $request, string $role): void
-    {
-        $this->validateUserRequest($request);
+        $this->validateUserRequest($request, Role::ROLE_PARISH);
 
         $user = $this->createUser($request);
 
-        $this->handleUserRole($user, $role);
+        $this->handleUserRole($request, $user, Role::ROLE_PARISH);
 
         event(new Registered($user));
 
         Auth::login($user);
+
+        return redirect(route('dashboard', absolute: false));
     }
 
-    private function validateUserRequest(Request $request): void
+    private function validateUserRequest(Request $request, string $role): void
     {
+        if ($this->itIsUserRegistration($role)) {
+            $request->validate([
+                'priest_id' => [
+                    'required',
+                    Rule::exists('users', 'id'),
+                ],
+            ]);
+        }
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+    }
+
+    private function handleUserPriest(Request $request, User $user): void
+    {
+        $priest = User::find($request->get('priest_id'));
+
+        if (!$priest) {
+            ValidationException::withMessages([
+                'role' => ['Invalid priest id'],
+            ]);
+        }
+
+        $user->prists()->attach($priest);
     }
 
     private function createUser(Request $request): User
@@ -75,12 +105,21 @@ class RegisteredUserController extends Controller
         return $user;
     }
 
-    private function handleUserRole(User $user, string $role): void
+    private function handleUserRole(Request $request, User $user, string $roleName): void
     {
-        $role = Role::getByName(Role::ROLE_USER);
+        $role = Role::getByName($roleName);
 
-        if ($role) {
-            $user->roles()->attach($role);
+        if (!$role) {
+            ValidationException::withMessages([
+                'role' => ['Invalid role id'],
+            ]);
         }
+
+        $user->roles()->attach($role);
+    }
+
+    private function itIsUserRegistration(string $role): bool
+    {
+        return $role === Role::ROLE_USER;
     }
 }
