@@ -9,7 +9,7 @@ class PriestController extends Controller
 {
     public function index()
     {
-        //
+        return view('dashboard.priest.index');
     }
 
     public function create()
