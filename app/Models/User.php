@@ -15,6 +15,9 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    const DASHBOARD_PRIEST_ROUTE_NAME = 'dashboard.priest.index';
+    const DASHBOARD_FOLLOWER_ROUTE_NAME = 'dashboard.follower.index';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -84,11 +87,11 @@ class User extends Authenticatable
 
         if ($roleName === Role::ROLE_PARISH)
         {
-            $dashboardRouteName = 'dashboard.priest.index';
+            $dashboardRouteName = static::DASHBOARD_PRIEST_ROUTE_NAME;
         }
         else
         {
-            $dashboardRouteName = 'dashboard.follower.index';
+            $dashboardRouteName = static::DASHBOARD_FOLLOWER_ROUTE_NAME;
         }
 
         return $dashboardRouteName;
