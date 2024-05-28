@@ -29,16 +29,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        $roleName = auth()->user()->roles->first()->name;
-
-        if ($roleName === Role::ROLE_PARISH)
-        {
-            $redirectName = 'dashboard-priest';
-        }
-        else
-        {
-            $redirectName = 'dashboard-follower';
-        }
+        $redirectName = $this->getRedirectName();
 
         return redirect()->intended(route($redirectName, absolute: false));
     }
@@ -55,5 +46,21 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    private function getRedirectName(): string
+    {
+        $roleName = auth()->user()->roles->first()->name;
+
+        if ($roleName === Role::ROLE_PARISH)
+        {
+            $redirectName = 'dashboard-priest';
+        }
+        else
+        {
+            $redirectName = 'dashboard-follower';
+        }
+
+        return $redirectName;
     }
 }
