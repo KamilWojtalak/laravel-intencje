@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\Role;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +29,18 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        $roleName = auth()->user()->roles->first()->name;
+
+        if ($roleName === Role::ROLE_PARISH)
+        {
+            $redirectName = 'dashboard-priest';
+        }
+        else
+        {
+            $redirectName = 'dashboard-follower';
+        }
+
+        return redirect()->intended(route($redirectName, absolute: false));
     }
 
     /**
