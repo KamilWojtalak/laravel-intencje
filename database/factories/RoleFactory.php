@@ -12,7 +12,7 @@ class RoleFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'email' => fake()->randomDigit(),
+            'strength' => fake()->randomDigit(),
         ];
     }
 }
