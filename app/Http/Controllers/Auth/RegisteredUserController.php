@@ -35,49 +35,36 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $this->validateUserRequest($request);
-
-        $user = $this->createUser($request);
-
-        // $role = Role::getByName(Role::ROLE_USER); // Pobieramy rolę o nazwie 'test'
-        $role = Role::where('name', Role::ROLE_USER )->first(); // Pobieramy rolę o nazwie 'test'
-
-        if ($role) {
-            $user->roles()->attach($role); // Dodajemy użytkownika do roli
-        }
-
-        event(new Registered($user));
-
-        Auth::login($user);
+        $this->handleLogic($request, Role::ROLE_USER);
 
         return redirect(route('dashboard', absolute: false));
     }
 
     public function storePriest(Request $request): RedirectResponse
     {
+        $this->handleLogic($request, Role::ROLE_PARISH);
+
+        return redirect(route('dashboard', absolute: false));
+    }
+
+    private function handleLogic(Request $request, string $role): void
+    {
         $this->validateUserRequest($request);
 
         $user = $this->createUser($request);
 
-        // $role = Role::getByName(Role::ROLE_USER); // Pobieramy rolę o nazwie 'test'
-        $role = Role::where('name', Role::ROLE_PARISH )->first(); // Pobieramy rolę o nazwie 'test'
-
-        if ($role) {
-            $user->roles()->attach($role); // Dodajemy użytkownika do roli
-        }
+        $this->handleUserRole($user, $role);
 
         event(new Registered($user));
 
         Auth::login($user);
-
-        return redirect(route('dashboard', absolute: false));
     }
 
     private function validateUserRequest(Request $request): void
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
     }
@@ -91,5 +78,14 @@ class RegisteredUserController extends Controller
         ]);
 
         return $user;
+    }
+
+    private function handleUserRole(User $user, string $role): void
+    {
+        $role = Role::getByName(Role::ROLE_USER);
+
+        if ($role) {
+            $user->roles()->attach($role);
+        }
     }
 }
