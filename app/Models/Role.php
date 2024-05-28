@@ -24,4 +24,11 @@ class Role extends Model
     {
         return $this->belongsToMany(User::class, 'role_users');
     }
+
+    public static function getByName(string $name): ?self
+    {
+        return static::query()
+            ->where('name', $name)
+            ->first();
+    }
 }
