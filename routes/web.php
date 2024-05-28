@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PublicController::class, 'index'])
     ->name('public.index');
 
+Route::name('dashboard')
+    ->get('dashboard', function () {
+        $routeName = auth()->user()->getDashboardRouteName();
+
+        return redirect()->route($routeName);
+    });
 
 Route::middleware(['auth', 'verified'])
     ->name('dashboard.')
@@ -38,4 +44,5 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
+require __DIR__ . '/test.php';
