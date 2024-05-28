@@ -19,7 +19,7 @@ class RegisteredUserController extends Controller
 {
     public function create(Request $request): View|RedirectResponse
     {
-        if (!$request->has('priest_id'))
+        if ($this->hasNotPriestId($request))
         {
             return redirect()->route('public.index');
         }
@@ -125,5 +125,10 @@ class RegisteredUserController extends Controller
     private function itIsUserRegistration(string $role): bool
     {
         return $role === Role::ROLE_USER;
+    }
+
+    private function hasNotPriestId(Request $request): bool
+    {
+        return !$request->has('priest_id');
     }
 }
