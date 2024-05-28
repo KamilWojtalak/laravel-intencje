@@ -72,4 +72,9 @@ class User extends Authenticatable
             })
             ->get();
     }
+
+    public function getRoleName(): string
+    {
+        return $this->user->roles->first()->name;
+    }
 }
