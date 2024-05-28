@@ -17,8 +17,13 @@ use Illuminate\Validation\ValidationException;
 
 class RegisteredUserController extends Controller
 {
-    public function create(): View
+    public function create(Request $request): View|RedirectResponse
     {
+        if (!$request->has('priest_id'))
+        {
+            return redirect()->route('public.index');
+        }
+
         return view('auth.register');
     }
 
