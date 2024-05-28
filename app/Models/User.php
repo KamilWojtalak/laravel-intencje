@@ -54,6 +54,16 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class, 'role_users');
     }
 
+    public function prists(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'prist_user');
+    }
+
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'prist_user');
+    }
+
     public static function getPriests(): Collection
     {
         return User::query()
