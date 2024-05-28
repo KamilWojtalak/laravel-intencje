@@ -54,11 +54,11 @@ class AuthenticatedSessionController extends Controller
 
         if ($roleName === Role::ROLE_PARISH)
         {
-            $redirectName = 'dashboard-priest';
+            $redirectName = 'dashboard.priest.index';
         }
         else
         {
-            $redirectName = 'dashboard-follower';
+            $redirectName = 'dashboard.follower.index';
         }
 
         return $redirectName;
