@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Dashboard\FollowerController;
+use App\Http\Controllers\Dashboard\PriestController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
@@ -7,9 +9,28 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PublicController::class, 'index'])
     ->name('public.index');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware(['auth', 'verified'])
+    ->name('dashboard.')
+    ->prefix('/dashboard')
+    ->group(function () {
+
+        Route::name('priest.')
+            ->prefix('/priest')
+            ->group(function () {
+                Route::get('/', [PriestController::class, 'index'])
+                    ->name('index');
+            });
+
+        Route::name('follower.')
+            ->prefix('/follower')
+            ->group(function () {
+                Route::get('/', [FollowerController::class, 'index'])
+                    ->name('index');
+            });
+
+    });
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
