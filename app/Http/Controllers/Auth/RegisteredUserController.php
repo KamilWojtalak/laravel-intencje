@@ -32,7 +32,6 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-
         $this->validateUserRequest($request, Role::ROLE_USER);
 
         $user = $this->createUser($request);
