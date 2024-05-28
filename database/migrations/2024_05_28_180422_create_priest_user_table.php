@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->unsignedBigInteger('priest_id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('follower_id');
 
             $table->foreign('priest_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('follower_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

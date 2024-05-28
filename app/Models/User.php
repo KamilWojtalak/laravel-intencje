@@ -56,12 +56,12 @@ class User extends Authenticatable
 
     public function prists(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'priest_user');
+        return $this->belongsToMany(User::class, 'priest_user', 'follower_id', 'priest_id');
     }
 
     public function followers(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'priest_user');
+        return $this->belongsToMany(User::class, 'priest_user', 'priest_id', 'follower_id');
     }
 
     public static function getPriests(): Collection
