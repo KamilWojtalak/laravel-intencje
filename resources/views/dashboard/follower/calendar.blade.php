@@ -18,10 +18,18 @@
                         {
                             title: '{{ $event->name }}',
                             start: '{{ $event->start_at->format('Y-m-d\TH:i:sP') }}',
-                            end: '{{ $event->start_at->addHour()->format('Y-m-d\TH:i:sP') }}'
+                            end: '{{ $event->start_at->addHour()->format('Y-m-d\TH:i:sP') }}',
+                            url: '{{ route('dashboard.follower.events.create') }}'
                         },
                     @endforeach
-                ]
+                ],
+                eventClick: function(info) {
+                    info.jsEvent.preventDefault(); // don't let the browser navigate
+
+                    if (info.event.url) {
+                        window.open(info.event.url);
+                    }
+                }
             });
             calendar.render();
         });
