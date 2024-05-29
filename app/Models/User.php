@@ -59,18 +59,20 @@ class User extends Authenticatable
 
     public function prists(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'priest_follower', 'follower_id', 'priest_id');
+        return $this->belongsToMany(User::class, 'priest_follower', 'follower_id', 'priest_id')
+            ->withPivot('is_accepted');
     }
 
     public function followers(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'priest_follower', 'priest_id', 'follower_id');
+        return $this->belongsToMany(User::class, 'priest_follower', 'priest_id', 'follower_id')
+            ->withPivot('is_accepted');
     }
 
     public static function getPriests(): Collection
     {
         return User::query()
-            ->whereHas('roles', function(Builder $q) {
+            ->whereHas('roles', function (Builder $q) {
                 $q->where('name', Role::ROLE_PARISH);
             })
             ->get();
@@ -85,12 +87,9 @@ class User extends Authenticatable
     {
         $roleName = $this->getRoleName();
 
-        if ($roleName === Role::ROLE_PARISH)
-        {
+        if ($roleName === Role::ROLE_PARISH) {
             $dashboardRouteName = static::DASHBOARD_PRIEST_ROUTE_NAME;
-        }
-        else
-        {
+        } else {
             $dashboardRouteName = static::DASHBOARD_FOLLOWER_ROUTE_NAME;
         }
 
