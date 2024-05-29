@@ -39,6 +39,9 @@ Route::middleware(['auth', 'verified'])
                     ->group(function () {
                         Route::get('/create', [EventsController::class, 'create'])
                             ->name('create');
+
+                        Route::post('/', [EventsController::class, 'store'])
+                            ->name('store');
                     });
             });
 
