@@ -11,6 +11,9 @@ class PriestController extends Controller
 {
     public function index()
     {
+        /**
+         * @var User $user
+         */
         $user = auth()->user();
 
         $user->load('followers');
@@ -26,20 +29,21 @@ class PriestController extends Controller
 
     public function accept(User $follower)
     {
+        /**
+         * @var User $user
+         */
         $user = auth()->user();
         $user->load('followers');
 
-        // if ($user->hasNotThisFollower($follower)) {
-        if (!$user->followers->contains('id', $follower->id)) {
+        if ($user->hasNotThisFollower($follower)) {
             ValidationException::withMessages([
                 'follower' => __("Ten ksiądz nie ma takiego użytkownika")
             ]);
         }
 
-        // $follower = $user->getFollowerById($follower->id);
-        $follower = $user->followers->where('id', $follower->id)->first();
+        $follower = $user->getPriestFollowerById($follower->id);
 
-        // $user->acceptFollower($follower);
+        // $user->acceptPriestFollower($follower);
         $user->followers()->updateExistingPivot($follower->id, ['is_accepted' => 1]);
 
         return redirect()->route('dashboard.priest.index')->with('success', 'Pomyślnie zaakcpetowano użytkownika');

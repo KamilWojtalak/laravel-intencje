@@ -95,4 +95,29 @@ class User extends Authenticatable
 
         return $dashboardRouteName;
     }
+
+    public function hasNotThisFollower(User $follower): bool
+    {
+        return !$this->hasThisFollower($follower);
+    }
+
+    public function hasThisFollower(User $follower): bool
+    {
+        return $this->followers->contains('id', $follower->id);
+    }
+
+    public function getPriestFollowerById(int $followerId): ?User
+    {
+        return $this->followers->where('id', $followerId)->first();
+    }
+
+    public function acceptPriestFollower(User $follower): int
+    {
+        return $this
+            ->followers()
+            ->updateExistingPivot(
+                $follower->id,
+                ['is_accepted' => 1]
+            );
+    }
 }
