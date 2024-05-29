@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Role;
 use App\Models\User;
+use Database\Factories\EventFactory;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,24 +15,27 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Role::factory()->create([
-            'name' => 'admin',
-            'strength' => '100',
+        $this->call([
+            EventFactory::class
         ]);
+        // Role::factory()->create([
+        //     'name' => 'admin',
+        //     'strength' => '100',
+        // ]);
 
-        Role::factory()->create([
-            'name' => 'parish',
-            'strength' => '10',
-        ]);
+        // Role::factory()->create([
+        //     'name' => 'parish',
+        //     'strength' => '10',
+        // ]);
 
-        Role::factory()->create([
-            'name' => 'user',
-            'strength' => '1',
-        ]);
+        // Role::factory()->create([
+        //     'name' => 'user',
+        //     'strength' => '1',
+        // ]);
 
-        User::factory()->create([
-            'name' => 'Admin user',
-            'email' => 'admin@admin.admin',
-        ]);
+        // User::factory()->create([
+        //     'name' => 'Admin user',
+        //     'email' => 'admin@admin.admin',
+        // ]);
     }
 }
