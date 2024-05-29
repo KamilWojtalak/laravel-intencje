@@ -51,7 +51,7 @@ Route::middleware(['auth', 'verified'])
                 Route::get('/', [FollowersController::class, 'index'])
                     ->name('index');
 
-                Route::get('/calendar', [PriestsController::class, 'calendar'])
+                Route::get('/calendar', [FollowersController::class, 'calendar'])
                     ->name('calendar');
             });
 
