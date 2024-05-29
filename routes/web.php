@@ -29,6 +29,9 @@ Route::middleware(['auth', 'verified'])
 
                 Route::post('/{follower}', [PriestController::class, 'accept'])
                     ->name('accept');
+
+                Route::get('/calendar', [PriestController::class, 'calendar'])
+                    ->name('calendar');
             });
 
         Route::name('follower.')

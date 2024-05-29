@@ -48,6 +48,11 @@ class PriestController extends Controller
         return redirect()->route('dashboard.priest.index')->with('success', 'Pomyślnie zaakcpetowano użytkownika');
     }
 
+    public function calendar()
+    {
+        return view('dashboard.priest.calendar', []);
+    }
+
     public function create()
     {
         //
