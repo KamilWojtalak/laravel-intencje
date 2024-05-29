@@ -10,4 +10,6 @@ class PriestFollower extends Model
     use HasFactory;
 
     protected $table = 'priest_follower';
+
+    protected $guarded = [];
 }
