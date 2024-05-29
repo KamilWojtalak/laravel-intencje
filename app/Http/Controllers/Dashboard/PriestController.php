@@ -9,10 +9,16 @@ class PriestController extends Controller
 {
     public function index()
     {
-        $followers = auth()->user()->followers;
+        $user = auth()->user();
+
+        $user->load('followers');
+
+        $unacceptedFollowers = $user->followers->where('pivot.is_accepted', 0);
+        $acceptedFollowers = $user->followers->where('pivot.is_accepted', 1);
 
         return view('dashboard.priest.index', [
-            'followers' => $followers
+            'unacceptedFollowers' => $unacceptedFollowers,
+            'acceptedFollowers' => $acceptedFollowers,
         ]);
     }
 
