@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class PriestFollower extends Model
 {
     use HasFactory;
+
+    protected $table = 'priest_follower';
 }
