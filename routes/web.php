@@ -50,6 +50,9 @@ Route::middleware(['auth', 'verified'])
             ->group(function () {
                 Route::get('/', [FollowersController::class, 'index'])
                     ->name('index');
+
+                Route::get('/calendar', [PriestsController::class, 'calendar'])
+                    ->name('calendar');
             });
 
     });

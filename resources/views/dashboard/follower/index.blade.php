@@ -12,6 +12,8 @@
                     <h2>Twoj ksiądz to: {{ $priest->name }}.</h2>
                     @if (Auth::user()->isAcceptedByPriest())
                         <p>Zostałeś zaakceptowany przez księdza, teraz możesz wysłać swoją intecję</p>
+
+                        <a href="{{ route('dashboard.follower.calendar') }}">Wybierz mszę, na którą chcesz podać intencję</a>
                     @else
                         <p> Czekaj za zostaniesz zaakcpetowany. Wiadomość o twoją chęć dołączenia została wysłana do
                             księdza.</p>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Event;
 use Illuminate\Http\Request;
 
 class FollowersController extends Controller
@@ -13,6 +14,17 @@ class FollowersController extends Controller
 
         return view('dashboard.follower.index', [
             'priest' => $priest
+        ]);
+    }
+
+    public function calendar()
+    {
+        $priest = auth()->user()->prists->first();
+
+        $events = Event::getByPriest($priest);
+
+        return view('dashboard.follower.calendar', [
+            'events' => $events,
         ]);
     }
 
