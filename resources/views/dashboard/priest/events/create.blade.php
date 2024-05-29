@@ -11,6 +11,7 @@
 
                 <form action="{{ route('dashboard.priest.events.store') }}" method="post">
                     @csrf
+
                     <div class="">
                         Name
                         <input type="name" name="name">

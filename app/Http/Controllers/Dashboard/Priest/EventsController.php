@@ -11,4 +11,9 @@ class EventsController extends Controller
     {
         return view('dashboard.priest.events.create');
     }
+
+    public function store()
+    {
+        dd('dafssdfasfdas');
+    }
 }
