@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,15 +11,22 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class EventFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
+        $startDate = now();
+
+        $endDate = now()->endOfMonth()->addMonth();
+
+        $randomDateTime = $this->faker->dateTimeBetween($startDate, $endDate);
+
+        $testUserId = User::whereHas('roles', function ($query) {
+            $query->where('name', Role::ROLE_PARISH);
+        })->inRandomOrder()->value('id');
+
         return [
-            //
+            'name' => 'Nazwa mszy: ' . $this->faker->name,
+            'start_at' => $randomDateTime,
+            'priest_id' => $testUserId
         ];
     }
 }
