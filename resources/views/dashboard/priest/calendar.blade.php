@@ -4,7 +4,12 @@
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth'
+                initialView: 'dayGridMonth',
+                events: [{ // this object will be "parsed" into an Event Object
+                    title: 'The Title', // a property!
+                    start: '2024-05-30', // a property!
+                    end: '2024-05-30' // a property! ** see important note below about 'end' **
+                }]
             });
             calendar.render();
         });
