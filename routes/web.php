@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Dashboard\FollowerController;
-use App\Http\Controllers\Dashboard\PriestController;
+use App\Http\Controllers\Dashboard\FollowersController;
+use App\Http\Controllers\Dashboard\PriestsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
@@ -24,20 +24,26 @@ Route::middleware(['auth', 'verified'])
         Route::name('priest.')
             ->prefix('/priest')
             ->group(function () {
-                Route::get('/', [PriestController::class, 'index'])
+                Route::get('/', [PriestsController::class, 'index'])
                     ->name('index');
 
-                Route::post('/{follower}', [PriestController::class, 'accept'])
+                Route::post('/{follower}', [PriestsController::class, 'accept'])
                     ->name('accept');
 
-                Route::get('/calendar', [PriestController::class, 'calendar'])
+                Route::get('/calendar', [PriestsController::class, 'calendar'])
                     ->name('calendar');
+
+                Route::name('events.')
+                    ->prefix('/events')
+                    ->group(function () {
+
+                    });
             });
 
         Route::name('follower.')
             ->prefix('/follower')
             ->group(function () {
-                Route::get('/', [FollowerController::class, 'index'])
+                Route::get('/', [FollowersController::class, 'index'])
                     ->name('index');
             });
 

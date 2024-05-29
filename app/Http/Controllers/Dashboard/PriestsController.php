@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
-class PriestController extends Controller
+class PriestsController extends Controller
 {
     public function index()
     {
