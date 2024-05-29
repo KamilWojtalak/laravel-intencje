@@ -11,7 +11,7 @@ class EventsController extends Controller
 {
     public function create(Event $event)
     {
-        return view('dashboard.followers.events.create');
+        return view('dashboard.follower.events.create');
     }
 
     // TODO validation i authorization w Events Controller
