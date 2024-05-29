@@ -1,7 +1,6 @@
 @push('head_scripts')
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.13/index.global.min.js'></script>
     <script>
-
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -14,21 +13,14 @@
                     omitZeroMinute: false,
                     meridiem: false
                 },
-                events: [{
-                        title: 'Przykładowa msza o 8:00',
-                        start: '{{ $date = now()->addDay()->setHour(8)->setMinutes(0)->format('Y-m-d\TH:i:sP') }}',
-                        end: '2024-05-30'
-                    },
-                    {
-                        title: 'Przykładowa msza o 12:00',
-                        start: '{{ $date = now()->addDay()->setHour(12)->setMinutes(0)->format('Y-m-d\TH:i:sP') }}',
-                        end: '2024-05-30'
-                    },
-                    {
-                        title: 'Przykładowa msza o 20:00',
-                        start: '{{ $date = now()->addDay()->setHour(20)->setMinutes(0)->format('Y-m-d\TH:i:sP') }}',
-                        end: '2024-05-30'
-                    }
+                events: [
+                    @foreach ($events as $event)
+                        {
+                            title: '{{ $event->name }}',
+                            start: '{{ $event->start_at->format('Y-m-d\TH:i:sP') }}',
+                            end: '{{ $event->start_at->addHour()->format('Y-m-d\TH:i:sP') }}'
+                        },
+                    @endforeach
                 ]
             });
             calendar.render();
@@ -37,6 +29,7 @@
 @endpush
 
 <x-app-layout>
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Priest Calendar') }}
