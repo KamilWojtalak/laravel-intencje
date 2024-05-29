@@ -15,6 +15,7 @@ class EventsController extends Controller
     }
 
     // TODO validation i authorization w Events Controller
+    // TODO clean code
     public function store(Request $request)
     {
         // $request->validate();
