@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Event;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -50,6 +51,8 @@ class PriestController extends Controller
 
     public function calendar()
     {
+        $events = Event::getByPriest(auth()->user());
+
         return view('dashboard.priest.calendar', []);
     }
 
