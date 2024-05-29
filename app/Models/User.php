@@ -120,4 +120,13 @@ class User extends Authenticatable
                 ['is_accepted' => 1]
             );
     }
+
+    public function isAcceptedByPriest(): bool
+    {
+        return $this
+            ->prists()
+            ->first()
+            ->pivot
+            ->is_accepted;
+    }
 }
