@@ -14,7 +14,7 @@ class EventsController extends Controller
         return view('dashboard.priest.events.create');
     }
 
-    // TODO validation i authorization
+    // TODO validation i authorization w Events Controller
     public function store(Request $request)
     {
         // $request->validate();
