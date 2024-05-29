@@ -37,11 +37,11 @@ Route::middleware(['auth', 'verified'])
                 Route::name('events.')
                     ->prefix('/events')
                     ->group(function () {
+                        Route::post('/store', [EventsController::class, 'store'])
+                            ->name('store');
+
                         Route::get('/create', [EventsController::class, 'create'])
                             ->name('create');
-
-                        Route::post('/', [EventsController::class, 'store'])
-                            ->name('store');
                     });
             });
 

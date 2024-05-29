@@ -18,11 +18,11 @@
                     </div>
                     <div class="">
                         Dzień
-                        <input type="date" name="" id="">
+                        <input type="date" name="date" id="date">
                     </div>
                     <div class="">
                         Godzina
-                        <input type="number" name="hourd" id="hourd">
+                        <input type="number" name="hour" id="hour">
                     </div>
                     <div class="">
                         Minuty
