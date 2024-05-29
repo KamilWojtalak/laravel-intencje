@@ -10,21 +10,28 @@
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
+                timeZone: 'Europe/Warsaw',
                 initialView: 'dayGridMonth',
-                events: [
-                    {
+                locale: 'pl', // Ustawienie lokalizacji na polską
+                eventTimeFormat: {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    omitZeroMinute: false,
+                    meridiem: false
+                },
+                events: [{
                         title: 'Przykładowa msza o 8:00',
-                        start: '{{ $date = now()->addDay()->setHour(8)->format('Y-m-d\TH:i:sP') }}',
+                        start: '{{ $date = now()->addDay()->setHour(8)->setMinutes(0)->format('Y-m-d\TH:i:sP') }}',
                         end: '2024-05-30'
                     },
                     {
                         title: 'Przykładowa msza o 12:00',
-                        start: '{{ $date = now()->addDay()->setHour(12)->format('Y-m-d\TH:i:sP') }}',
+                        start: '{{ $date = now()->addDay()->setHour(12)->setMinutes(0)->format('Y-m-d\TH:i:sP') }}',
                         end: '2024-05-30'
                     },
                     {
                         title: 'Przykładowa msza o 20:00',
-                        start: '{{ $date = now()->addDay()->setHour(20)->format('Y-m-d\TH:i:sP') }}',
+                        start: '{{ $date = now()->addDay()->setHour(20)->setMinutes(0)->format('Y-m-d\TH:i:sP') }}',
                         end: '2024-05-30'
                     }
                 ]
