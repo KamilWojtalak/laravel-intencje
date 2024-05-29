@@ -17,14 +17,14 @@ class EventFactory extends Factory
 
         $endDate = now()->endOfMonth()->addMonth();
 
-        $randomDateTime = $this->faker->dateTimeBetween($startDate, $endDate);
+        $randomDateTime = fake()->dateTimeBetween($startDate, $endDate);
 
         $testUserId = User::whereHas('roles', function ($query) {
             $query->where('name', Role::ROLE_PARISH);
         })->inRandomOrder()->value('id');
 
         return [
-            'name' => 'Nazwa mszy: ' . $this->faker->name,
+            'name' => 'Nazwa mszy: ' . fake()->name,
             'start_at' => $randomDateTime,
             'priest_id' => $testUserId
         ];
