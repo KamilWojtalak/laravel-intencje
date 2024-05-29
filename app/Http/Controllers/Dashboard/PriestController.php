@@ -43,8 +43,7 @@ class PriestController extends Controller
 
         $follower = $user->getPriestFollowerById($follower->id);
 
-        // $user->acceptPriestFollower($follower);
-        $user->followers()->updateExistingPivot($follower->id, ['is_accepted' => 1]);
+        $user->priestAcceptFollower($follower);
 
         return redirect()->route('dashboard.priest.index')->with('success', 'Pomyślnie zaakcpetowano użytkownika');
     }

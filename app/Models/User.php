@@ -111,7 +111,7 @@ class User extends Authenticatable
         return $this->followers->where('id', $followerId)->first();
     }
 
-    public function acceptPriestFollower(User $follower): int
+    public function priestAcceptFollower(User $follower): int
     {
         return $this
             ->followers()
