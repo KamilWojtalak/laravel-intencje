@@ -38,11 +38,12 @@ Route::middleware(['auth', 'verified'])
                 Route::name('events.')
                     ->prefix('/events')
                     ->group(function () {
-                        Route::post('/store', [PriestEventsController::class, 'store'])
-                            ->name('store');
 
                         Route::get('/create', [PriestEventsController::class, 'create'])
                             ->name('create');
+
+                        Route::post('/store', [PriestEventsController::class, 'store'])
+                            ->name('store');
                     });
             });
 
@@ -58,11 +59,11 @@ Route::middleware(['auth', 'verified'])
                 Route::name('events.')
                     ->prefix('/events')
                     ->group(function () {
+                        Route::get('/create/{event}', [FollowersEventsController::class, 'create'])
+                            ->name('create');
+
                         Route::post('/store', [FollowersEventsController::class, 'store'])
                             ->name('store');
-
-                        Route::get('/create', [FollowersEventsController::class, 'create'])
-                            ->name('create');
                     });
             });
 

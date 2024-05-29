@@ -19,7 +19,7 @@
                             title: '{{ $event->name }}',
                             start: '{{ $event->start_at->format('Y-m-d\TH:i:sP') }}',
                             end: '{{ $event->start_at->addHour()->format('Y-m-d\TH:i:sP') }}',
-                            url: '{{ route('dashboard.follower.events.create') }}'
+                            url: '{{ route('dashboard.follower.events.create', [$event->id]) }}'
                         },
                     @endforeach
                 ],
