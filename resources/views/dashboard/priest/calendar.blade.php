@@ -1,11 +1,6 @@
 @push('head_scripts')
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.13/index.global.min.js'></script>
     <script>
-        // TODO zmień locale w jaki wyświetlają się daty, na polski
-        // TODO trzeba dodać eventy z bazy danych
-        // TODO trzeba dodać facotries i seedery dla tych eventow i je przestować
-        // TODO trzeba dodać rozwiniecie nazwy po najechaniu myszkiem
-        // TODO Trzeba dodać możliwość umawiania się na dany termin
 
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
