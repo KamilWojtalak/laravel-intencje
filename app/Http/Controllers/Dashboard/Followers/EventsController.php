@@ -38,4 +38,4 @@ class EventsController extends Controller
 //         return redirect()->route('dashboard.priest.calendar')
 //             ->with('success', 'Pomyślnie utworzono mszę');
 //     }
-// }
+}
