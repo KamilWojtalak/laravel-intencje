@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Dashboard\FollowersController;
+use App\Http\Controllers\Dashboard\Priest\EventsController;
 use App\Http\Controllers\Dashboard\PriestsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicController;
@@ -36,7 +37,8 @@ Route::middleware(['auth', 'verified'])
                 Route::name('events.')
                     ->prefix('/events')
                     ->group(function () {
-
+                        Route::get('/create', [EventsController::class, 'create'])
+                            ->name('create');
                     });
             });
 
