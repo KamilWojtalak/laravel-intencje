@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\Dashboard\FollowersController;
-use App\Http\Controllers\Dashboard\Priest\EventsController;
+use App\Http\Controllers\Dashboard\Priest\EventsController as PriestEventsController;
+use App\Http\Controllers\Dashboard\Followers\EventsController as FollowersEventsController;
 use App\Http\Controllers\Dashboard\PriestsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicController;
@@ -37,10 +38,10 @@ Route::middleware(['auth', 'verified'])
                 Route::name('events.')
                     ->prefix('/events')
                     ->group(function () {
-                        Route::post('/store', [EventsController::class, 'store'])
+                        Route::post('/store', [PriestEventsController::class, 'store'])
                             ->name('store');
 
-                        Route::get('/create', [EventsController::class, 'create'])
+                        Route::get('/create', [PriestEventsController::class, 'create'])
                             ->name('create');
                     });
             });
@@ -53,6 +54,16 @@ Route::middleware(['auth', 'verified'])
 
                 Route::get('/calendar', [FollowersController::class, 'calendar'])
                     ->name('calendar');
+
+                Route::name('events.')
+                    ->prefix('/events')
+                    ->group(function () {
+                        Route::post('/store', [FollowersEventsController::class, 'store'])
+                            ->name('store');
+
+                        Route::get('/create', [FollowersEventsController::class, 'create'])
+                            ->name('create');
+                    });
             });
 
     });
