@@ -1,15 +1,33 @@
 @push('head_scripts')
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.13/index.global.min.js'></script>
     <script>
+        // TODO zmień locale w jaki wyświetlają się daty, na polski
+        // TODO trzeba dodać eventy z bazy danych
+        // TODO trzeba dodać facotries i seedery dla tych eventow i je przestować
+        // TODO trzeba dodać rozwiniecie nazwy po najechaniu myszkiem
+        // TODO Trzeba dodać możliwość umawiania się na dany termin
+
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
-                events: [{ // this object will be "parsed" into an Event Object
-                    title: 'The Title', // a property!
-                    start: '2024-05-30', // a property!
-                    end: '2024-05-30' // a property! ** see important note below about 'end' **
-                }]
+                events: [
+                    {
+                        title: 'Przykładowa msza o 8:00',
+                        start: '{{ $date = now()->addDay()->setHour(8)->format('Y-m-d\TH:i:sP') }}',
+                        end: '2024-05-30'
+                    },
+                    {
+                        title: 'Przykładowa msza o 12:00',
+                        start: '{{ $date = now()->addDay()->setHour(12)->format('Y-m-d\TH:i:sP') }}',
+                        end: '2024-05-30'
+                    },
+                    {
+                        title: 'Przykładowa msza o 20:00',
+                        start: '{{ $date = now()->addDay()->setHour(20)->format('Y-m-d\TH:i:sP') }}',
+                        end: '2024-05-30'
+                    }
+                ]
             });
             calendar.render();
         });
