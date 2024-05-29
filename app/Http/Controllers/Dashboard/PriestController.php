@@ -53,7 +53,9 @@ class PriestController extends Controller
     {
         $events = Event::getByPriest(auth()->user());
 
-        return view('dashboard.priest.calendar', []);
+        return view('dashboard.priest.calendar', [
+            'events' => $events
+        ]);
     }
 
     public function create()
