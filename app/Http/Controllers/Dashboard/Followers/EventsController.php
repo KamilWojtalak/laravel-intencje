@@ -11,29 +11,31 @@ class EventsController extends Controller
 {
     public function create(Event $event)
     {
-        return view('dashboard.follower.events.create');
+        return view('dashboard.follower.events.create', [
+            'event' => $event
+        ]);
     }
 
     // TODO validation i authorization w Events Controller
     // TODO clean code
-    public function store(Request $request)
-    {
-        // $request->validate();
-        $name = $request->get('name');
+//     public function store(Request $request)
+//     {
+//         // $request->validate();
+//         $name = $request->get('name');
 
-        $date = $request->get('date');
-        $hour = $request->integer('hour');
-        $minutes = $request->integer('minutes', 0);
+//         $date = $request->get('date');
+//         $hour = $request->integer('hour');
+//         $minutes = $request->integer('minutes', 0);
 
-        $dateTime = Carbon::createFromFormat('Y-m-d', $date)->setHour($hour)->setMinutes($minutes);
+//         $dateTime = Carbon::createFromFormat('Y-m-d', $date)->setHour($hour)->setMinutes($minutes);
 
-        Event::create([
-            'priest_id' => auth()->id(),
-            'name' => $name,
-            'start_at' => $dateTime,
-        ]);
+//         Event::create([
+//             'priest_id' => auth()->id(),
+//             'name' => $name,
+//             'start_at' => $dateTime,
+//         ]);
 
-        return redirect()->route('dashboard.priest.calendar')
-            ->with('success', 'Pomyślnie utworzono mszę');
-    }
-}
+//         return redirect()->route('dashboard.priest.calendar')
+//             ->with('success', 'Pomyślnie utworzono mszę');
+//     }
+// }
