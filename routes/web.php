@@ -26,6 +26,9 @@ Route::middleware(['auth', 'verified'])
             ->group(function () {
                 Route::get('/', [PriestController::class, 'index'])
                     ->name('index');
+
+                Route::post('/{follower}', [PriestController::class, 'accept'])
+                    ->name('accept');
             });
 
         Route::name('follower.')
