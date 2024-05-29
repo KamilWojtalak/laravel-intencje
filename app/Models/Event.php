@@ -10,4 +10,8 @@ class Event extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    protected $casts = [
+        'start_at' => 'datetime'
+    ];
 }
