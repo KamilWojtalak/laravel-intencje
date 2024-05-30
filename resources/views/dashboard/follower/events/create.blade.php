@@ -16,6 +16,9 @@
 
                     <form action="{{ route('dashboard.follower.events.store') }}" method="post">
                         @csrf
+
+                        <input type="hidden" name="event_id" value="{{ $event->id }}">
+
                         <div class="">
                             <textarea name="message" id="message" cols="30" rows="10" placeholder="Tekst twojej intencji">Test, przykładowy tekst intencji za Wojciecha Bogacza</textarea>
                         </div>
