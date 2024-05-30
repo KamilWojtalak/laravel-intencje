@@ -47,8 +47,12 @@ class EventsController extends Controller
 
         $event->participants()->attach(auth()->id(), [
             'message' => $message,
+            // TODO to przenieść do payment
             'price' => $price,
         ]);
+
+        // TODO tutaj będzie p24 integration
+        // TODO
 
         return redirect()
             ->route('dashboard.follower.events.index')
