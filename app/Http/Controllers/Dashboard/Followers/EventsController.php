@@ -35,15 +35,19 @@ class EventsController extends Controller
          *
          * TODO na razie bez płatności dodaj
          */
-        dd($event, $message, $price);
 
-        Event::create([
-            'priest_id' => auth()->id(),
-            'name' => $name,
-            'start_at' => $dateTime,
+         dd('jeszcze nie implemented');
+        //  TODO do dodania participants relationship i table
+        $event->participants()->create([
+            'user_id' => auth()->id(),
+            'message' => $message,
+            'price' => $price,
         ]);
 
-        return redirect()->route('dashboard.priest.calendar')
-            ->with('success', 'Pomyślnie utworzono mszę');
+        $event->save();
+
+        return redirect()
+            ->route('dashboard.follower.events.index')
+            ->with('succes', 'Pomyślnie zapisano na mszę.');
     }
 }
