@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -33,6 +34,15 @@ class Event extends Model
     {
         return static::query()
             ->where('priest_id', $priest->id)
+            ->get();
+    }
+
+    public static function getForCurrentUser(): Collection
+    {
+        return static::query()
+            ->whereHas('participants', function (Builder $q) {
+                $q->where('users.id', auth()->id());
+            })
             ->get();
     }
 }

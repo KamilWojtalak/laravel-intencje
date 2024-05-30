@@ -9,6 +9,15 @@ use Illuminate\Http\Request;
 
 class EventsController extends Controller
 {
+    public function index()
+    {
+        $events = Event::getForCurrentUser();
+
+        return view('dashboard.follower.events.index', [
+            'events' => $events
+        ]);
+    }
+
     public function create(Event $event)
     {
         return view('dashboard.follower.events.create', [
