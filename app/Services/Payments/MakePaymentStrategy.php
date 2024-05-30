@@ -8,11 +8,15 @@ use \Devpark\Transfers24\Requests\Transfers24;
 
 class MakePaymentStrategy
 {
-    public function handleEvent(string $strategy, Event $event, User $user)
+    // public function handleEvent(string $strategy, Event $event, User $user)
+    public function handleEvent()
     {
         $registrationRequest = app()->make(Transfers24::class);
 
-        $registerPayment = $registrationRequest->setEmail('kamilwojtalak99@gmail.com')->setAmount(10000)->init();
+        $registerPayment = $registrationRequest
+            ->setEmail('kamilwojtalak99@gmail.com')
+            ->setAmount(10000)
+            ->init();
 
         // TODO
         // Create payment
@@ -24,6 +28,9 @@ class MakePaymentStrategy
             // Shopper::orderMadeActions($registerPayment->getSessionId());
 
             return $registrationRequest->execute($registerPayment->getToken(), true);
+        }
+        else {
+            dd($registerPayment->getErrorDescription(), 'coś poszło nie tak adfsdsfaafsddsfafads');
         }
     }
 

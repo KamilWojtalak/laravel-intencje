@@ -37,6 +37,7 @@ class EventsController extends Controller
         $price = $request->get('price', 2);
 
         $event = Event::find($eventId);
+        $redirectUrl = (new MakePaymentStrategy)->handleEvent();
 
         /**
          * TODO, trzeba zrobić możliwość zapisywania się na event, event po zapisaniu się jednej osoby (w przyszłości wielu osób),
@@ -54,7 +55,6 @@ class EventsController extends Controller
         // TODO
 
         // p24 integration
-        $redirectUrl = (new MakePaymentStrategy)->handleEvent('przelewy24', $event, auth()->user());
 
         return redirect()
             ->route('dashboard.follower.events.index')
