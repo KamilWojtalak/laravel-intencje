@@ -38,11 +38,9 @@ class EventsController extends Controller
         $event = Event::find($eventId);
 
         /**
-         * TODO, trzeba zrobić możliwość zapisywania się na event, event po zapisaniu się jednej osoby (w przyszłości wielu osób), nie moze być już dostępny do zapisu
+         * TODO, trzeba zrobić możliwość zapisywania się na event, event po zapisaniu się jednej osoby (w przyszłości wielu osób),
+         * nie moze być już dostępny do zapisu
          *
-         * dodaj tymczasowo user_id nullable, będzie to odpowaidało userowi który się zapisał, w przyszłości przerób to na many to many relationship
-         *
-         * TODO na razie bez płatności dodaj
          */
 
         $event->participants()->attach(auth()->id(), [
