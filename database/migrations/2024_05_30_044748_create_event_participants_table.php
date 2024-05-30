@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('event_participant', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('event_id');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('event_id')->nullable();
             $table->text('message');
             $table->decimal('price');
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('null');
-            $table->foreign('event_id')->references('id')->on('events')->onDelete('null');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('event_id')->references('id')->on('events')->onDelete('set null');
         });
     }
 
