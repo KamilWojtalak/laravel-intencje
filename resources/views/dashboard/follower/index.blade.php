@@ -14,6 +14,10 @@
                         <p>Zostałeś zaakceptowany przez księdza, teraz możesz wysłać swoją intecję</p>
 
                         <a href="{{ route('dashboard.follower.calendar') }}">Wybierz mszę, na którą chcesz podać intencję</a>
+                        <p>
+                            <a href="{{ route('dashboard.follower.events.index') }}">Zobacz twoje intencje</a>
+
+                        </p>
                     @else
                         <p> Czekaj za zostaniesz zaakcpetowany. Wiadomość o twoją chęć dołączenia została wysłana do
                             księdza.</p>
