@@ -17,25 +17,33 @@ class EventsController extends Controller
     }
 
     // TODO validation i authorization w Events Controller
+    // TODO event authorization, if this user can assign to this event
     // TODO clean code
-//     public function store(Request $request)
-//     {
-//         // $request->validate();
-//         $name = $request->get('name');
+    public function store(Request $request)
+    {
+        // $request->validate();
+        $eventId = $request->get('event_id');
+        $message = $request->get('message');
+        $price = $request->get('price', 2);
 
-//         $date = $request->get('date');
-//         $hour = $request->integer('hour');
-//         $minutes = $request->integer('minutes', 0);
+        $event = Event::find($eventId);
 
-//         $dateTime = Carbon::createFromFormat('Y-m-d', $date)->setHour($hour)->setMinutes($minutes);
+        /**
+         * TODO, trzeba zrobić możliwość zapisywania się na event, event po zapisaniu się jednej osoby (w przyszłości wielu osób), nie moze być już dostępny do zapisu
+         *
+         * dodaj tymczasowo user_id nullable, będzie to odpowaidało userowi który się zapisał, w przyszłości przerób to na many to many relationship
+         *
+         * TODO na razie bez płatności dodaj
+         */
+        dd($event, $message, $price);
 
-//         Event::create([
-//             'priest_id' => auth()->id(),
-//             'name' => $name,
-//             'start_at' => $dateTime,
-//         ]);
+        Event::create([
+            'priest_id' => auth()->id(),
+            'name' => $name,
+            'start_at' => $dateTime,
+        ]);
 
-//         return redirect()->route('dashboard.priest.calendar')
-//             ->with('success', 'Pomyślnie utworzono mszę');
-//     }
+        return redirect()->route('dashboard.priest.calendar')
+            ->with('success', 'Pomyślnie utworzono mszę');
+    }
 }
