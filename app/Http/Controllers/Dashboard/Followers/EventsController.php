@@ -54,6 +54,8 @@ class EventsController extends Controller
         // TODO tutaj będzie p24 integration
         // TODO
 
+        // p24 integration
+
         return redirect()
             ->route('dashboard.follower.events.index')
             ->with('succes', 'Pomyślnie zapisano na mszę.');
