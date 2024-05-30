@@ -36,7 +36,7 @@ class EventsController extends Controller
          * TODO na razie bez płatności dodaj
          */
 
-         dd('jeszcze nie implemented');
+        dd('jeszcze nie implemented');
         //  TODO do dodania participants relationship i table
         $event->participants()->create([
             'user_id' => auth()->id(),
