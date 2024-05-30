@@ -24,9 +24,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('event_participant', function (Blueprint $table) {
-            $table->dropColumn('payment_id');
+            $table->dropForeign(['payment_id']);
 
-            $table->dropForeign('payment_id');
+            $table->dropColumn('payment_id');
         });
     }
 };
