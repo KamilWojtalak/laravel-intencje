@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('status', 75)->default('init');
-            $table->string('session_id');
+            $table->string('session_id')->nullable();
             $table->unsignedBigInteger('payer_id')->nullable();
             $table->unsignedBigInteger('event_id')->nullable();
             $table->decimal('price');
