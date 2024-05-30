@@ -54,7 +54,7 @@ class EventsController extends Controller
         // TODO
 
         // p24 integration
-        $redirectUrl = (new MakePaymentStrategy)->handleEvent('przelewy24', $event);
+        $redirectUrl = (new MakePaymentStrategy)->handleEvent('przelewy24', $event, auth()->user());
 
         return redirect()
             ->route('dashboard.follower.events.index')

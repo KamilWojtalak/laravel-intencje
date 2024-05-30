@@ -2,10 +2,31 @@
 
 namespace App\Services\Payments;
 
+use App\Models\Event;
+use App\Models\User;
 use \Devpark\Transfers24\Requests\Transfers24;
 
 class MakePaymentStrategy
 {
+    public function handleEvent(string $strategy, Event $event, User $user)
+    {
+        $registrationRequest = app()->make(Transfers24::class);
+
+        $registerPayment = $registrationRequest->setEmail('kamilwojtalak99@gmail.com')->setAmount(10000)->init();
+
+        // TODO
+        // Create payment
+        // A najlepiej to tutaj ten pivot przesyłać, make payment powinno być jeszcze w controllerze
+        // Dobra ale to zaraz zrobisz, najpierw zrób pozytywny redirect na p24
+
+        if ($registerPayment->isSuccess()) {
+            // Mark pivot
+            // Shopper::orderMadeActions($registerPayment->getSessionId());
+
+            return $registrationRequest->execute($registerPayment->getToken(), true);
+        }
+    }
+
     public function handle(string $strategy)
     {
         switch ($strategy) {
