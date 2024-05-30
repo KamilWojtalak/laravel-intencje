@@ -59,6 +59,9 @@ Route::middleware(['auth', 'verified'])
                 Route::name('events.')
                     ->prefix('/events')
                     ->group(function () {
+                        Route::get('/', [FollowersEventsController::class, 'index'])
+                            ->name('index');
+
                         Route::get('/create/{event}', [FollowersEventsController::class, 'create'])
                             ->name('create');
 
