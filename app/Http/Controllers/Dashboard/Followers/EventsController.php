@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard\Followers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
+use App\Models\Payment;
 use App\Services\Payments\MakePaymentStrategy;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -37,7 +38,6 @@ class EventsController extends Controller
         $price = $request->get('price', 2);
 
         $event = Event::find($eventId);
-        $redirectUrl = (new MakePaymentStrategy)->handleEvent();
 
         /**
          * TODO, trzeba zrobić możliwość zapisywania się na event, event po zapisaniu się jednej osoby (w przyszłości wielu osób),
@@ -45,16 +45,28 @@ class EventsController extends Controller
          *
          */
 
+        //  TODO nie jest tutaj potrzbeny payed_id i event_id, to chyba nadmiarowe dane, chociaż nie wiem, na razie zostawiam bo nic to nie zmieni
+        // TODO Ważne żęby działało
+        $payment = Payment::create([
+            'status' => 'init',
+            'session_id' => null,
+            'payer_id' => auth()->id(),
+            'event_id' => $event->id,
+            'price' => $price
+        ]);
+
         $event->participants()->attach(auth()->id(), [
             'message' => $message,
             // TODO to przenieść do payment
             'price' => $price,
+            'payment_id' => $payment->id,
         ]);
 
         // TODO tutaj będzie p24 integration
         // TODO
 
         // p24 integration
+        $redirectUrl = (new MakePaymentStrategy)->handleEvent($payment);
 
         return redirect()
             ->route('dashboard.follower.events.index')

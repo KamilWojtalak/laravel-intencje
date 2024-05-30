@@ -3,19 +3,22 @@
 namespace App\Services\Payments;
 
 use App\Models\Event;
+use App\Models\Payment;
 use App\Models\User;
 use \Devpark\Transfers24\Requests\Transfers24;
 
 class MakePaymentStrategy
 {
     // public function handleEvent(string $strategy, Event $event, User $user)
-    public function handleEvent()
+    public function handleEvent(Payment $payment)
     {
         $registrationRequest = app()->make(Transfers24::class);
 
         $registerPayment = $registrationRequest
+            // TODO refactor
             ->setEmail('kamilwojtalak99@gmail.com')
-            ->setAmount(10000)
+            // TODO refactor
+            ->setAmount($payment->price)
             ->init();
 
         // TODO
@@ -25,6 +28,9 @@ class MakePaymentStrategy
 
         if ($registerPayment->isSuccess()) {
             // Mark pivot
+            // TODO refactor
+            $payment->session_id = $registerPayment->getSessionId();
+            $payment->save();
             // Shopper::orderMadeActions($registerPayment->getSessionId());
 
             return $registrationRequest->execute($registerPayment->getToken(), true);
