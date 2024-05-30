@@ -21,7 +21,8 @@ class FollowersController extends Controller
     {
         $priest = auth()->user()->prists->first();
 
-        $events = Event::getByPriest($priest);
+        // TODO do refactora i do Event service to powinno pójść
+        $events = Event::getByPriestForFollowerCalendar($priest);
 
         return view('dashboard.follower.calendar', [
             'events' => $events,

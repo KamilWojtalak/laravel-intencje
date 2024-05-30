@@ -37,6 +37,14 @@ class Event extends Model
             ->get();
     }
 
+    public static function getByPriestForFollowerCalendar(User $priest): Collection
+    {
+        return static::query()
+            ->where('priest_id', $priest->id)
+            ->whereDoesntHave('participants')
+            ->get();
+    }
+
     public static function getForCurrentUser(): Collection
     {
         return static::query()
