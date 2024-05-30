@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard\Followers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
+use App\Services\Payments\MakePaymentStrategy;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -53,6 +54,7 @@ class EventsController extends Controller
         // TODO
 
         // p24 integration
+        $redirectUrl = (new MakePaymentStrategy)->handleEvent('przelewy24', $event);
 
         return redirect()
             ->route('dashboard.follower.events.index')
