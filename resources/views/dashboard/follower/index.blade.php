@@ -13,7 +13,17 @@
                     @if (Auth::user()->isAcceptedByPriest())
                         <p>Zostałeś zaakceptowany przez księdza, teraz możesz wysłać swoją intecję</p>
 
-                        <a href="{{ route('dashboard.follower.calendar') }}">Wybierz mszę, na którą chcesz podać intencję</a>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <p>
+                            <a href="{{ route('dashboard.follower.calendar') }}">Wybierz mszę, na którą chcesz podać intencję</a>
+                        </p>
+                        <br>
+                        <br>
+                        <br>
                         <p>
                             <a href="{{ route('dashboard.follower.events.index') }}">Zobacz twoje intencje</a>
                         </p>
