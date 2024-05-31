@@ -31,8 +31,8 @@ class Przelewy24Controller extends Controller
         try {
             $this->handleStatus($request);
         } catch (\Throwable $th) {
-            Log::info("NOTYFIKACJA P24 | NIE PRZESZLO");
-            Log::error($th->getMessage());
+            Log::channel('payments')->info("NOTYFIKACJA P24 | NIE PRZESZLO");
+            Log::channel('payments')->error($th->getMessage());
         }
     }
 
