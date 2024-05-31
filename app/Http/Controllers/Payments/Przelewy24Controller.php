@@ -41,6 +41,7 @@ class Przelewy24Controller extends Controller
         return view('public.payments.przelewy24.callback');
     }
 
+    // TODO clean code
     private function handleStatus(Request $request): void
     {
         Log::channel('payments')->info("NOTYFIKACJA P24");
