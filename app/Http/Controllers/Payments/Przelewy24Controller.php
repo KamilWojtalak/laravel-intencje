@@ -43,24 +43,23 @@ class Przelewy24Controller extends Controller
 
     private function handleStatus(Request $request): void
     {
-        Log::info("NOTYFIKACJA P24");
-        Log::info(json_encode($request->all()));
+        Log::channel('payments')->info("NOTYFIKACJA P24");
+        Log::channel('payments')->info(json_encode($request->all()));
 
-        $payment_verify = app()->make(\Devpark\Transfers24\Requests\Transfers24::class);
-        $payment_response = $payment_verify->receive($request);
+        $paymentVerify = app()->make(\Devpark\Transfers24\Requests\Transfers24::class);
+        $paymentResponse = $paymentVerify->receive($request);
 
-        if ($payment_response->isSuccess()) {
-            // TODO Add payment
-            $order = Payment::where('payment_session_id', $payment_response->getSessionId())->firstOrFail();
+        if ($paymentResponse->isSuccess()) {
+            $order = Payment::where('session_id', $paymentResponse->getSessionId())->firstOrFail();
 
-            $order->status = Payment::STATUS_PAYMENT_NOTIFICATION;
             $order->payment_order_id = $request->get('orderId');
-            $order->status = Payment::STATUS_PAYMENT_VERIFIED;
+            $order->status = Payment::STATUS_VERIFIED;
 
             $order->save();
 
-            Log::info("SPRAWDZAM VERIFY Przeszło całe");
+            Log::channel('payments')->info("SPRAWDZAM VERIFY Przeszło całe");
         }
+
         echo "OK";
     }
 }

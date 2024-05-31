@@ -9,5 +9,8 @@ class Payment extends Model
 {
     use HasFactory;
 
+    const STATUS_INIT = 'init';
+    const STATUS_VERIFIED = 'verified';
+
     protected $guarded = [];
 }
