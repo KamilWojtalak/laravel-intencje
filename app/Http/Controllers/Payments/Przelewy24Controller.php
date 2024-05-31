@@ -38,7 +38,7 @@ class Przelewy24Controller extends Controller
 
     public function callback()
     {
-        return view('przelewy24.callback');
+        return view('public.payments.przelewy24.callback');
     }
 
     private function handleStatus(Request $request): void
