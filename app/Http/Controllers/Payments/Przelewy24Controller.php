@@ -52,7 +52,7 @@ class Przelewy24Controller extends Controller
         if ($paymentResponse->isSuccess()) {
             $order = Payment::where('session_id', $paymentResponse->getSessionId())->firstOrFail();
 
-            $order->payment_order_id = $request->get('orderId');
+            $order->provider_order_id = $request->get('orderId');
             $order->status = Payment::STATUS_VERIFIED;
 
             $order->save();
