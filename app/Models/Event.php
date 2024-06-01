@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Collection;
 
@@ -26,6 +27,15 @@ class Event extends Model
             'event_id',
             'user_id',
             'id',
+            'id',
+        );
+    }
+
+    public function priest(): BelongsTo
+    {
+        return $this->belongsTo(
+            User::class,
+            'priest_id',
             'id',
         );
     }
