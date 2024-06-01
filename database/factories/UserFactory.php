@@ -25,7 +25,7 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->words(3, true),
+            'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
@@ -47,7 +47,7 @@ class UserFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'name' => 'Parafia św. ' . $attributes['name']
+                'name' => 'Parafia św. ' . fake()->words(3, true)
             ];
         })->afterCreating(function ($user) {
 
