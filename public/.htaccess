@@ -1,9 +1,15 @@
-AuthType Basic
-AuthName "Restricted Area"
-AuthUserFile /home/u270401374/public_html/test-intencje/.htpasswd
-Require valid-user
-
 <IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REMOTE_ADDR} !^5\.252\.202\.255$
+    RewriteCond %{REMOTE_ADDR} !^5\.252\.202\.254$
+    RewriteCond %{REMOTE_ADDR} !^20\.215\.81\.124$
+    RewriteRule ^ - [L]
+
+    AuthType Basic
+    AuthName "Restricted Area"
+    AuthUserFile /home/u270401374/public_html/test-intencje/.htpasswd
+    Require valid-user
+
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
     </IfModule>
