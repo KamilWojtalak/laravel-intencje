@@ -75,4 +75,16 @@ class Event extends Model
             })
             ->get();
     }
+
+    public function scopeByPriest(Builder $query, User $priest): Builder
+    {
+        return $query->where('priest_id', $priest->id);
+    }
+
+    public function scopePayed(Builder $query): Builder
+    {
+        return $query->whereHas('payment', function (Builder $query) {
+            $query->where('status', 'verified');
+        });
+    }
 }
