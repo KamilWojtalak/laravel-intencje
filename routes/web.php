@@ -83,4 +83,7 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/payments/przelewy24.php';
 require __DIR__ . '/auth.php';
-require __DIR__ . '/test.php';
+
+if (app()->environment('local', 'develop')) {
+    require __DIR__ . '/test.php';
+}
