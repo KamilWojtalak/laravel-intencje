@@ -9,6 +9,20 @@ use Illuminate\Http\Request;
 
 class EventsController extends Controller
 {
+    public function index()
+    {
+        $priest = auth()->user();
+
+        $events = Event::query()
+            ->byPriest($priest)
+            ->payed()
+            ->get();
+
+        return view('dashboard.priest.events.index', [
+            'events' => $events
+        ]);
+    }
+
     public function create()
     {
         return view('dashboard.priest.events.create');
