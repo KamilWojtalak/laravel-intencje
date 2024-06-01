@@ -1,20 +1,22 @@
 <IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteCond %{REMOTE_ADDR} !^5\.252\.202\.255$
-    RewriteCond %{REMOTE_ADDR} !^5\.252\.202\.254$
-    RewriteCond %{REMOTE_ADDR} !^20\.215\.81\.124$
-    RewriteRule ^ - [L]
-
     AuthType Basic
     AuthName "Restricted Area"
     AuthUserFile /home/u270401374/public_html/test-intencje/.htpasswd
     Require valid-user
 
+    # Allow specified IP addresses to bypass authentication
+    <RequireAny>
+        Require ip 5.252.202.255
+        Require ip 5.252.202.254
+        Require ip 20.215.81.124
+        Require valid-user
+    </RequireAny>
+
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
     </IfModule>
 
-    # RewriteEngine On
+    RewriteEngine On
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
