@@ -1,14 +1,17 @@
 <x-public-layout>
-    wyszukaj parafie
 
-    <form action="{{ route('register') }}" method="get">
-        <select name="priest_id" id="priest_id">
-            @foreach ($priests as $priest)
-                <option value="{{ $priest->id }}">{{ $priest->name }}</option>
-            @endforeach
-        </select>
+    @if (auth()->guest() || auth()->user()->hasNotPriestAssigned())
+        wyszukaj parafie
 
-        <button>Zapisz się</button>
-    </form>
+        <form action="{{ route('register') }}" method="get">
+            <select name="priest_id" id="priest_id">
+                @foreach ($priests as $priest)
+                    <option value="{{ $priest->id }}">{{ $priest->name }}</option>
+                @endforeach
+            </select>
+
+            <button>Zapisz się</button>
+        </form>
+    @endif
 
 </x-public-layout>

@@ -129,4 +129,17 @@ class User extends Authenticatable
             ->pivot
             ->is_accepted;
     }
+
+    public function hasPriestAssigned(): bool
+    {
+        return $this
+            ->prists()
+            ->exists();
+    }
+
+    public function hasNotPriestAssigned(): bool
+    {
+        return !$this
+            ->hasPriestAssigned();
+    }
 }
