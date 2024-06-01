@@ -1,9 +1,9 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    # RewriteCond %{REMOTE_ADDR} !^5\.252\.202\.255$
-    # RewriteCond %{REMOTE_ADDR} !^5\.252\.202\.254$
-    # RewriteCond %{REMOTE_ADDR} !^20\.215\.81\.124$
-    # RewriteRule ^ - [L]
+    RewriteCond %{REMOTE_ADDR} !^5\.252\.202\.255$
+    RewriteCond %{REMOTE_ADDR} !^5\.252\.202\.254$
+    RewriteCond %{REMOTE_ADDR} !^20\.215\.81\.124$
+    RewriteRule ^ - [L]
 
     AuthType Basic
     AuthName "Restricted Area"
