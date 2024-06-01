@@ -14,13 +14,22 @@ class EventFactory extends Factory
     public function definition(): array
     {
         $startDate = now();
-
         $endDate = now()->endOfMonth()->addMonth();
 
-        $randomDateTime = fake()->dateTimeBetween($startDate, $endDate);
+        // Obliczamy różnicę w sekundach między datami $startDate i $endDate
+        $timestampStart = $startDate->timestamp;
+        $timestampEnd = $endDate->timestamp;
+        $timeDifference = $timestampEnd - $timestampStart;
 
+        // Generujemy losowy timestamp w ramach tej różnicy
+        $randomTimestamp = random_int(0, $timeDifference);
+
+        // Tworzymy obiekt Carbon na podstawie wylosowanego timestamp
+        $randomDateTime = $startDate->copy()->addSeconds($randomTimestamp);
+
+        // Sprawdzamy czy godzina jest większa lub równa 23 i zmniejszamy o 1, jeśli tak
         if ($randomDateTime->hour >= 23) {
-            $randomDateTime->hour = 22;
+            $randomDateTime->subHour();
         }
 
         $testUserId = User::whereHas('roles', function ($query) {
