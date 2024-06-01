@@ -40,13 +40,13 @@
                     {{ $order->message }}
                 </td>
                 <td>
-                    Status: {{ $order->payment->status }}
+                    {{ $order->payment->status }}
                 </td>
                 <td>
-                    session_id: {{ $order->payment->session_id }}
+                    {{ $order->payment->session_id }}
                 </td>
                 <td>
-                    Price: {{ $order->payment->price }}
+                    {{ $order->payment->price }}
                 </td>
             </tr>
         @empty
