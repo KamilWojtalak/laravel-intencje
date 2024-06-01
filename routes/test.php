@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\EventParticipant;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -28,7 +29,7 @@ Route::name('test.')
             ->prefix('/orders')
             ->group(function () {
                 Route::get('/', function () {
-                    $users = User::all();
+                    $orders = EventParticipant::get();
 
                     return view('test.orders.index', compact('orders'));
                 })
