@@ -23,4 +23,15 @@ Route::name('test.')
                 })
                     ->name('store');
             });
+
+        Route::name('orders.')
+            ->prefix('/orders')
+            ->group(function () {
+                Route::get('/', function () {
+                    $users = User::all();
+
+                    return view('test.orders.index', compact('orders'));
+                })
+                    ->name('index');
+            });
     });
