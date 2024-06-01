@@ -1,6 +1,6 @@
 <x-public-layout>
 
-    @if (auth()->guest() || auth()->user()->hasNotPriestAssigned())
+    @if (auth()->guest() || auth()->user()->can('view-sign-to-priest-form'))
         wyszukaj parafie
 
         <form action="{{ route('register') }}" method="get">

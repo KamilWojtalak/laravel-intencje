@@ -142,4 +142,22 @@ class User extends Authenticatable
         return !$this
             ->hasPriestAssigned();
     }
+
+    public function isFollower(): bool
+    {
+        return $this
+            ->getRoleName() === Role::ROLE_USER;
+    }
+
+    public function isPriest(): bool
+    {
+        return $this
+            ->getRoleName() === Role::ROLE_PARISH;
+    }
+
+    public function isNotPriest(): bool
+    {
+        return !$this
+            ->isPriest();
+    }
 }

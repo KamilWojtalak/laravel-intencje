@@ -19,6 +19,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        \Gate::define('view-sign-to-priest-form', function () {
+
+            if (auth()->user()->isFollower() && auth()->user()->hasNotPriestAssigned()) {
+                return true;
+            }
+
+            return false;
+        });
     }
 }
