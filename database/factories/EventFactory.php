@@ -19,6 +19,10 @@ class EventFactory extends Factory
 
         $randomDateTime = fake()->dateTimeBetween($startDate, $endDate);
 
+        if ($randomDateTime->hour >= 23) {
+            $randomDateTime->hour = 22;
+        }
+
         $testUserId = User::whereHas('roles', function ($query) {
             $query->where('name', Role::ROLE_PARISH);
         })->inRandomOrder()->value('id');
