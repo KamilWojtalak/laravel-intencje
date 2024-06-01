@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PublicController::class, 'index'])
     ->name('public.index');
 
-Route::name('dashboard')
+Route::middleware(['auth', 'verified'])
+    ->name('dashboard')
     ->get('dashboard', function () {
         $routeName = auth()->user()->getDashboardRouteName();
 
@@ -22,6 +23,8 @@ Route::middleware(['auth', 'verified'])
     ->name('dashboard.')
     ->prefix('/dashboard')
     ->group(function () {
+
+
 
         Route::name('priest.')
             ->prefix('/priest')
