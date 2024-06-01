@@ -14,23 +14,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        Role::factory()->create([
+            'name' => 'admin',
+            'strength' => '100',
+        ]);
+
+        Role::factory()->create([
+            'name' => 'parish',
+            'strength' => '10',
+        ]);
+
+        Role::factory()->create([
+            'name' => 'user',
+            'strength' => '1',
+        ]);
+
         $this->call([
             EventSeeder::class
         ]);
-        // Role::factory()->create([
-        //     'name' => 'admin',
-        //     'strength' => '100',
-        // ]);
-
-        // Role::factory()->create([
-        //     'name' => 'parish',
-        //     'strength' => '10',
-        // ]);
-
-        // Role::factory()->create([
-        //     'name' => 'user',
-        //     'strength' => '1',
-        // ]);
 
         // User::factory()->create([
         //     'name' => 'Admin user',
