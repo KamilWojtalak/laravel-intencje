@@ -30,7 +30,7 @@
                     {{ $order->follower->name }}
                 </td>
                 <td>
-                    {{ $order->event->start_at->diffForHumans() }}
+                    {{ $order->event->start_at->format('H:i d.m.Y') }}
 
                 </td>
                 <td>
