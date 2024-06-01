@@ -29,6 +29,11 @@
                     Zaloguj się jako testowy user (tylko na developie, nie będzie tego na prodzie)
                 </a>
             </li>
+            <li>
+                <a href="{{ route('test.orders.index') }}">
+                    Podejrzyj zamówienia
+                </a>
+            </li>
         @endenv
 
     </ul>
