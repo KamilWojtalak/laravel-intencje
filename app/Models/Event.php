@@ -40,6 +40,18 @@ class Event extends Model
         );
     }
 
+    public function payment(): HasOneThrough
+    {
+        return $this->hasOneThrough(
+            Payment::class,
+            EventParticipant::class,
+            'event_id',
+            'id',
+            'id',
+            'payment_id'
+        );
+    }
+
     public static function getByPriest(User $priest): Collection
     {
         return static::query()
