@@ -42,6 +42,9 @@ Route::middleware(['auth', 'verified'])
                     ->prefix('/events')
                     ->group(function () {
 
+                        Route::get('/', [PriestEventsController::class, 'index'])
+                            ->name('index');
+
                         Route::get('/create', [PriestEventsController::class, 'create'])
                             ->name('create');
 
