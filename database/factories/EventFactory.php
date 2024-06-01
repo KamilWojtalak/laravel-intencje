@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Role;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -12,6 +13,21 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class EventFactory extends Factory
 {
     public function definition(): array
+    {
+        $randomDateTime = $this->getRandomDateTime();
+
+        $testUserId = User::whereHas('roles', function ($query) {
+            $query->where('name', Role::ROLE_PARISH);
+        })->inRandomOrder()->value('id');
+
+        return [
+            'name' => 'Nazwa mszy: ' . fake()->name,
+            'start_at' => $randomDateTime,
+            'priest_id' => $testUserId
+        ];
+    }
+
+    private function getRandomDateTime(): Carbon
     {
         $startDate = now();
         $endDate = now()->endOfMonth()->addMonth();
@@ -32,14 +48,8 @@ class EventFactory extends Factory
             $randomDateTime->subHour();
         }
 
-        $testUserId = User::whereHas('roles', function ($query) {
-            $query->where('name', Role::ROLE_PARISH);
-        })->inRandomOrder()->value('id');
+        $randomDateTime->minute(0);
 
-        return [
-            'name' => 'Nazwa mszy: ' . fake()->name,
-            'start_at' => $randomDateTime,
-            'priest_id' => $testUserId
-        ];
+        return $randomDateTime;
     }
 }
