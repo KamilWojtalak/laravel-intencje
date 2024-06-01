@@ -19,8 +19,13 @@
                 <a href="{{ route('dashboard') }}">Dashboard</a>
             </li>
         @endauth
-        <li>
-            <a href="{{ route('test.users.index') }}">TEST USERS</a>
-        </li>
+
+        @env(['local', 'develop'])
+            <li>
+                <a href="{{ route('test.users.index') }}">Zaloguj się jako testowy user (tylko na developie, nie będzie tego
+                    na prodzie)</a>
+            </li>
+        @endenv
+
     </ul>
 </nav>
