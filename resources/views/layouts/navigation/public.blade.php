@@ -13,7 +13,10 @@
         @endguest
         @auth
             <li>
-                <a href="{{ route('logout') }}">Logout</a>
+                <form action="{{ route('logout') }}" method="post">
+                    @csrf
+                    <button>Logout</button>
+                </form>
             </li>
             <li>
                 <a href="{{ route('dashboard') }}">Dashboard</a>
