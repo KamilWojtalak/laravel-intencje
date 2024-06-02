@@ -22,11 +22,8 @@ class StripeController extends Controller
     // TODO do wyrzucenia
     public function store(): RedirectResponse
     {
-        $stripe = new StripeService();
-
-        $stripe->createCheckoutSession();
-
-        $redirectUrl = $stripe->getRedirectUrl();
+        $redirectUrl = (new StripeService())
+            ->handleStoreCheckout();
 
         return redirect()->away($redirectUrl);
     }
