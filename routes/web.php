@@ -84,7 +84,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__ . '/payments/przelewy24.php';
+require __DIR__ . '/payments/payments.php';
 require __DIR__ . '/auth.php';
 
 if (app()->environment('local', 'develop')) {
