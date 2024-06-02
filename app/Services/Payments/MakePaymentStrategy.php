@@ -2,49 +2,16 @@
 
 namespace App\Services\Payments;
 
-use App\Models\Event;
 use App\Models\Payment;
-use App\Models\User;
-use \Devpark\Transfers24\Requests\Transfers24;
+use Illuminate\Http\RedirectResponse;
 
 class MakePaymentStrategy
 {
-    // public function handleEvent(string $strategy, Event $event, User $user)
-    public function handleEvent(Payment $payment)
-    {
-        $registrationRequest = app()->make(Transfers24::class);
-
-        $registerPayment = $registrationRequest
-            // TODO refactor
-            ->setEmail('kamilwojtalak99@gmail.com')
-            // TODO refactor
-            ->setAmount($payment->price)
-            ->init();
-
-        // TODO
-        // Create payment
-        // A najlepiej to tutaj ten pivot przesyłać, make payment powinno być jeszcze w controllerze
-        // Dobra ale to zaraz zrobisz, najpierw zrób pozytywny redirect na p24
-
-        if ($registerPayment->isSuccess()) {
-            // Mark pivot
-            // TODO refactor
-            $payment->session_id = $registerPayment->getSessionId();
-            $payment->save();
-            // Shopper::orderMadeActions($registerPayment->getSessionId());
-
-            return $registrationRequest->execute($registerPayment->getToken(), true);
-        }
-        else {
-            dd($registerPayment->getErrorDescription(), 'coś poszło nie tak adfsdsfaafsddsfafads');
-        }
-    }
-
-    public function handle(string $strategy)
+    public function handle(string $strategy, Payment $payment)
     {
         switch ($strategy) {
-            case 'przelewy24':
-                return $this->przelewy24();
+            case 'stripe':
+                return $this->stripe($payment);
                 break;
 
             default:
@@ -54,22 +21,11 @@ class MakePaymentStrategy
         }
     }
 
-    private function przelewy24()
+    public function stripe(Payment $payment): RedirectResponse
     {
-        $registrationRequest = app()->make(Transfers24::class);
+        $redirectUrl = (new StripeService())
+            ->handleStoreCheckout($payment);
 
-        // TODO zmienić hard coded values
-        $registerPayment = $registrationRequest->setEmail('kamilwojtalak99@gmail.com')->setAmount(10000)->init();
-
-        if ($registerPayment->isSuccess()) {
-            // Shopper::orderMadeActions($registerPayment->getSessionId());
-
-            return $registrationRequest->execute($registerPayment->getToken(), true);
-        }
-    }
-
-    private function test()
-    {
-
+        return redirect()->away($redirectUrl);
     }
 }
