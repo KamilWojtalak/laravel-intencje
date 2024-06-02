@@ -2,9 +2,7 @@
 
 namespace App\Services\Payments;
 
-use App\Models\Order;
 use App\Models\Payment;
-use App\Services\Models\OrderService;
 use App\Services\Models\PaymentService;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
@@ -20,16 +18,24 @@ class StripeService
         Stripe::setApiKey(config('payments.stripe.secret'));
     }
 
-    public function createCheckoutSession(): void
+    public function handleStoreCheckout(Payment $payment): string
+    {
+        $this->createCheckoutSession($payment);
+
+        $this->setSessionId($payment);
+
+        $redirectUrl = $this->getRedirectUrl();
+
+        return $redirectUrl;
+    }
+
+    public function createCheckoutSession(Payment $payment): void
     {
         $this->setApiKey();
 
-        $body = $this->getBody();
+        $body = $this->getBody($payment);
 
         $this->checkoutSession = \Stripe\Checkout\Session::create($body);
-
-        // TODO zmiana create payment
-        $this->createOrder();
     }
 
     public function getRedirectUrl(): string
@@ -54,21 +60,21 @@ class StripeService
         return response('', 200);
     }
 
-    private function createOrder(): void
+    private function setSessionId(Payment $payment): void
     {
-        // TODO zmienić na Payment service - clean code
-        Payment::create([
-            'session_id' => $this->checkoutSession->id,
-            'price' => 2.00,
-            'provider' => Payment::PROVIDER_STRIPE
-        ]);
+        $sessionId = $this->checkoutSession->id;
+
+        (new PaymentService($payment))
+            ->setSessionId($sessionId)
+            ->save();
     }
 
     private function handleCompletedEvent(\Stripe\Event $event): void
     {
         if ($this->isCheckoutSessionCompleted($event)) {
+            $sessionId = $event->data->object->id;
 
-            $payment = Payment::getBySessionId($event->data->object->id);
+            $payment = Payment::getBySessionId($sessionId);
 
             $paymentService = new PaymentService($payment);
 
@@ -124,7 +130,7 @@ class StripeService
         return response('Invalid signature', 400);
     }
 
-    private function getBody(): array
+    private function getBody(Payment $payment): array
     {
         $domain = config('app.url');
 
@@ -134,7 +140,8 @@ class StripeService
                     'currency' => 'PLN',
                     // 'currency' => 'USD',
                     // Kasa, minimum 2zł
-                    'unit_amount_decimal' => 200.00,
+                    // TODO refactor
+                    'unit_amount_decimal' => $payment->price * 100,
                     'product_data' => [
                         'name' => 'Nazwa wyświetlana produktu dla użytkownika',
                         'description' => 'Opis wyświetlany dla użytkownika',
@@ -144,7 +151,7 @@ class StripeService
                             'https://place-hold.it/100/50',
                         ],
                         'metadata' => [
-                            'metadatakey1' => 'value1',
+                            'payment_id' => $payment->id,
                             'metadatakey2' => 'value2',
                             'metadatakey3' => 'value3',
                         ]
