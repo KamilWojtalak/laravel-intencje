@@ -16,4 +16,13 @@ class Payment extends Model
     const STATUS_VERIFIED = 'verified';
 
     protected $guarded = [];
+
+    public static function getBySessionId(string $paymentSessionId): Payment
+    {
+        $order = static::query()
+            ->where('session_id', $paymentSessionId)
+            ->firstOrFail();
+
+        return $order;
+    }
 }
