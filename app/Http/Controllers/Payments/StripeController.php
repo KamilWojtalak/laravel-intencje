@@ -13,11 +13,13 @@ use \Illuminate\Contracts\View\View;
 
 class StripeController extends Controller
 {
+    // TODO do wyrzucenia
     public function index(): View|ViewFactory
     {
         return view('public.payments.stripe.index');
     }
 
+    // TODO do wyrzucenia
     public function store(): RedirectResponse
     {
         $stripe = new StripeService();
