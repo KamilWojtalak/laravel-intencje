@@ -52,7 +52,8 @@ class EventsController extends Controller
             'session_id' => null,
             'payer_id' => auth()->id(),
             'event_id' => $event->id,
-            'price' => $price
+            'price' => $price,
+            'provider' => Payment::PROVIDER_STRIPE
         ]);
 
         $event->participants()->attach(auth()->id(), [
