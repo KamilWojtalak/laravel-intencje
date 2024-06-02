@@ -21,6 +21,13 @@ class PaymentService
         return $this;
     }
 
+    public function setSessionId(string $sessionId): self
+    {
+        $this->payment->session_id = $sessionId;
+
+        return $this;
+    }
+
     public function verify(): self
     {
         $this->setPaymentStatus(Payment::STATUS_VERIFIED);
