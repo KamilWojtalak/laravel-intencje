@@ -63,14 +63,9 @@ class EventsController extends Controller
             'payment_id' => $payment->id,
         ]);
 
-        // TODO tutaj będzie p24 integration
-        // TODO
+        // stripe integration
+        $response = (new MakePaymentStrategy)->handle('stripe', $payment);
 
-        // p24 integration
-        $redirectUrl = (new MakePaymentStrategy)->handleEvent($payment);
-
-        return redirect()
-            ->route('dashboard.follower.events.index')
-            ->with('succes', 'Pomyślnie zapisano na mszę.');
+        return $response;
     }
 }
