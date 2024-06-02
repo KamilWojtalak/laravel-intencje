@@ -13,6 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->validateCsrfTokens(except: [
             'payments/przelewy24/status',
+            'payments/stripe/status',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
