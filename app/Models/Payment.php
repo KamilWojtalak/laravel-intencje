@@ -19,10 +19,10 @@ class Payment extends Model
 
     public static function getBySessionId(string $paymentSessionId): Payment
     {
-        $order = static::query()
+        $entity = static::query()
             ->where('session_id', $paymentSessionId)
             ->firstOrFail();
 
-        return $order;
+        return $entity;
     }
 }
